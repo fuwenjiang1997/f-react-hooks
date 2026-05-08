@@ -1,0 +1,58 @@
+name: Deploy Docs to GitHub Pages
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - 'apps/docs/**'
+    pull_request:
+        branches:
+            - main
+        types: [closed]
+        paths:
+            - 'apps/docs/**'
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    pages: write
+    id-token: write
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' || github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 安装 pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10.33.3
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: 'pnpm'
+                  cache-dependency-path: pnpm-lock.yaml
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Build core package
+              run: pnpm --filter fj-react-hooks/hooks build
+
+            - name: Build docs
+              run: pnpm --filter docs build
+
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./apps/docs/doc_build
+                  publish_branch: gh-pages
