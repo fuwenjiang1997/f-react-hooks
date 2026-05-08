@@ -38,17 +38,12 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 24
-                  cache: 'pnpm'
-                  cache-dependency-path: pnpm-lock.yaml
 
             - name: Install dependencies
               run: pnpm install
 
-            - name: Build core package
-              run: pnpm --filter fj-react-hooks/hooks build
-
             - name: Build docs
-              run: pnpm --filter docs build
+              run: pnpm build
 
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v4
