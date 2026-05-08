@@ -11,7 +11,7 @@ hero:
           link: /guide/
         - theme: alt
           text: 在 Github 上查看
-          link: https://github.com/f-react-hooks
+          link: https://github.com/fuwenjiang1997/f-react-hooks
 
 features:
     - title: 类型安全
