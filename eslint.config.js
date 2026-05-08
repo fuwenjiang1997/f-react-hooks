@@ -8,7 +8,7 @@ export default [
     js.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        ignores: ['*.js', '**/dist'],
+        ignores: ['*.js', '**/dist/**']
     },
     {
         files: ['**/*.{js,jsx,ts,tsx}'],
@@ -27,7 +27,7 @@ export default [
         },
         plugins: {
             'simple-import-sort': importSort,
-            'prettier': prettier
+            prettier: prettier
         }
     }
 ]

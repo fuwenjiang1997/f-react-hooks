@@ -16,7 +16,8 @@
         "strict": true,
         "experimentalDecorators": true,
         "moduleResolution": "bundler",
-        "paths": {}
+        "paths": {},
+        "ignoreDeprecations": "6.0"
     },
     "$schema": "https://json.schemastore.org/tsconfig",
     "display": "Base"

@@ -2,9 +2,11 @@
     "name": "@f-react-hooks/hooks",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.mts",
     "scripts": {
-        "dev": "vite build --watch",
+        "dev": "tsup --watch",
+        "build": "tsup",
         "test": "pnpm --filter=./packages/* test"
     },
     "keywords": [],
@@ -12,7 +14,7 @@
     "license": "ISC",
     "type": "commonjs",
     "peerDependencies": {
-        "react": "18.2.0",
-        "react-dom": "18.2.0"
+        "react": "19.2.6",
+        "react-dom": "19.2.6"
     }
 }

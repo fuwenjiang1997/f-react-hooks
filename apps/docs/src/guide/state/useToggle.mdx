@@ -1,0 +1,12 @@
+# useToggle
+
+import { useToggle } from '@f-react-hooks/hooks'
+
+export const useToggleDemo = () => {
+    const [value, toggle] = useToggle(false, true)
+
+    return <button onClick={toggle}>{value ? '开' : '关'}</button>
+}
+
+
+<useToggleDemo />

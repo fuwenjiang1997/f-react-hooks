@@ -3,13 +3,13 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "dev": "rspress dev"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "type": "commonjs",
     "dependencies": {},
     "devDependencies": {
         "@f-react-hooks/hooks": "workspace:*",
