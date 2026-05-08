@@ -13,6 +13,13 @@
     {
         "type": "dir",
         "name": "ui",
-        "label": "UI 型 Hooks"
+        "label": "UI 型 Hooks",
+        "activeMatch": "/guide/ui"
+    },
+    {
+        "type": "dir",
+        "name": "utils",
+        "label": "工具 Hooks",
+        "activeMatch": "/guide/utils"
     }
 ]
