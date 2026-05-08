@@ -6,6 +6,7 @@ export default defineConfig({
     base: '/f-react-hooks/',
     root: 'src/doc',
     globalStyles: path.join(__dirname, 'tailwind.css'),
+    title: 'f-react-hooks 文档',
     builderConfig: {
         resolve: {
             alias: {
