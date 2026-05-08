@@ -44,10 +44,11 @@ export const UseToggleDemo = () => {
 
 import { useToggle } from '@f-react-hooks/hooks'
 import { CmpRender } from '@/components/CmpRender'
+import { Button } from '@/components/ui/button'
 
 export const UseToggleDemoBoolean = () => {
     const [value, toggle] = useToggle(false, true)
-    return <button className="bg-blue-500 text-white px-2 py-1 rounded-md" onClick={toggle}>{ JSON.stringify(value) }</button>
+    return <Button className="bg-blue-500  text-white cursor-pointer" onClick={toggle}>{ JSON.stringify(value) }</Button>
 }
 
 <div>
@@ -72,13 +73,13 @@ export const UseToggleDemo = () => {
 </div>
 ```
 
-export const UseToggleDemo = () => {
+export const UseToggleDemoString = () => {
     const [value, toggle] = useToggle('开', '关')
-    return <button className="bg-green-500 text-white px-2 py-1 rounded-md" onClick={toggle}>{value}</button>
+    return <Button className="bg-blue-500  text-white cursor-pointer" onClick={toggle}>{value}</Button>
 }
 
 <div>
     <CmpRender>
-        <UseToggleDemo />
+        <UseToggleDemoString />
     </CmpRender>
 </div>
