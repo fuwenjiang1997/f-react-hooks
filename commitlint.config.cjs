@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     extends: [],
     parserPreset: 'conventional-changelog-conventionalcommits',
     prompt: {

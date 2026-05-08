@@ -3,12 +3,9 @@ import path from 'node:path'
 import { defineConfig } from '@rspress/core'
 
 export default defineConfig({
-    // 文档根目录
+    base: '/f-react-hooks/',
     root: 'src',
     builderConfig: {
-        output: {
-            assetPrefix: '/f-react-hooks/'
-        },
         resolve: {
             alias: {
                 '@f-react-hooks/hooks': path.resolve(
