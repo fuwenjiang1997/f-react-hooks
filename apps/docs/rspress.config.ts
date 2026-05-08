@@ -6,6 +6,9 @@ export default defineConfig({
     // 文档根目录
     root: 'src',
     builderConfig: {
+        output: {
+            assetPrefix: '/f-react-hooks/'
+        },
         resolve: {
             alias: {
                 '@f-react-hooks/hooks': path.resolve(
