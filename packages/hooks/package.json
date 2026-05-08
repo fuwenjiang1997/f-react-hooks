@@ -7,7 +7,8 @@
     "scripts": {
         "dev": "tsup --watch",
         "build": "tsup",
-        "test": "pnpm --filter=./packages/* test"
+        "test": "vitest run --color",
+        "test:cov": "vitest run --color --coverage"
     },
     "keywords": [],
     "author": "",

@@ -4,7 +4,7 @@ pageType: home
 hero:
     name: '@f-react-hooks'
     text: f-react-hooks 是一个基于 TypeScript 的 React Hooks 库
-    tagline: 追求极致！学习自定义 hooks 开发，丰富团队产出核心能力
+    tagline: 追求极致！自定义 hooks 开发，丰富团队产出核心能力
     actions:
         - theme: brand
           text: 快速开始
