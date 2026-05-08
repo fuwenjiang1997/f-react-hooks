@@ -18,7 +18,7 @@ export interface UseRequestReturn<T> {
 }
 
 export function useRequest<T>(fetcher: () => Promise<T>, options: UseRequestOptions<T> = {}): UseRequestReturn<T> {
-    const { manual = false, onSuccess, onError, onFinally, defaultData } = options
+    const { manual = true, onSuccess, onError, onFinally, defaultData } = options
 
     const [data, setData] = useState<T | undefined>(defaultData)
     const [error, setError] = useState<Error | undefined>(undefined)

@@ -1,0 +1,219 @@
+# useRequest
+
+## 描述
+
+`useRequest` 是一个用于管理异步请求的 React Hook。它提供了统一的 API 来处理数据获取、加载状态、错误处理和请求取消等功能，支持自动执行和手动执行两种模式。
+
+## API
+
+### 函数签名
+
+```ts
+function useRequest<T>(fetcher: () => Promise<T>, options?: UseRequestOptions<T>): UseRequestReturn<T>
+```
+
+### 参数
+
+| 参数      | 类型                      | 必需 | 说明                     |
+| --------- | ------------------------- | ---- | ------------------------ |
+| `fetcher` | `() => Promise<T>`        | 是   | 异步请求函数，返回 Promise |
+| `options` | `UseRequestOptions<T>`    | 否   | 配置项                   |
+
+### Options
+
+| 参数           | 类型               | 默认值 | 说明                                   |
+| -------------- | ------------------ | ------ | -------------------------------------- |
+| `manual`       | `boolean`          | `true` | 是否手动执行。为 `false` 时组件挂载后自动执行 |
+| `onSuccess`    | `(data: T) => void` | -      | 请求成功时的回调函数                   |
+| `onError`      | `(error: Error) => void` | -    | 请求失败时的回调函数                   |
+| `onFinally`    | `() => void`       | -      | 请求完成（成功或失败）时的回调函数     |
+| `defaultData`  | `T`                | -      | 默认数据                               |
+
+### 返回值
+
+| 返回值     | 类型                      | 说明                                   |
+| ---------- | ------------------------- | -------------------------------------- |
+| `data`     | `T \| undefined`          | 请求返回的数据                         |
+| `error`    | `Error \| undefined`      | 请求失败时的错误对象                   |
+| `loading`  | `boolean`                 | 请求是否正在进行中                     |
+| `run`      | `() => Promise<T \| undefined>` | 手动执行请求的函数               |
+| `cancel`   | `() => void`              | 取消当前请求                           |
+| `refresh`  | `() => Promise<T \| undefined>` | 重新执行请求（与 run 相同）     |
+
+## 示例 基础用法
+
+```ts
+import { useRequest } from '@f-react-hooks/hooks'
+
+const fetcher = () => fetch('/api/data').then(res => res.json())
+
+export const UseRequestDemo = () => {
+    const { data, error, loading, refresh } = useRequest(fetcher)
+
+    if (loading) return <div>加载中...</div>
+    if (error) return <div>请求失败: {error.message}</div>
+
+    return (
+        <div>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <button onClick={refresh}>刷新</button>
+        </div>
+    )
+}
+```
+
+import { useRequest } from '@f-react-hooks/hooks'
+import { Button } from '@/components/ui/button'
+
+
+export const mockFetch = () => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ message: 'Hello, useRequest!' })
+    }, 1000)
+  })
+}
+
+export const UseRequestDemoBasic = () => {
+  const { data, error, loading, refresh } = useRequest(mockFetch)
+
+  if (loading) return <div className="text-gray-500">加载中...</div>
+  if (error) return <div className="text-red-500">请求失败: {error.message}</div>
+
+  return (
+    <div className="flex flex-col gap-4">
+      <pre className="bg-gray-100 p-4 rounded-md">{JSON.stringify(data, null, 2)}</pre>
+      <Button 
+        onClick={refresh}
+        className="w-full bg-blue-500 text-white cursor-pointer"
+      >
+        刷新
+      </Button>
+    </div>
+  )
+}
+
+<div>
+    <UseRequestDemoBasic />
+</div>
+
+## 示例 手动模式
+
+```ts
+import { useRequest } from '@f-react-hooks/hooks'
+
+const fetcher = (id: number) => fetch(`/api/user/${id}`).then(res => res.json())
+
+export const UseRequestManualDemo = () => {
+    const { data, loading, run } = useRequest(fetcher)
+
+    const handleClick = () => {
+        run()
+    }
+
+    return (
+        <div>
+            <button onClick={handleClick} disabled={loading}>
+                {loading ? '加载中...' : '获取数据'}
+            </button>
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+        </div>
+    )
+}
+```
+
+
+export const mockFetchManual = () => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ id: 1, name: '张三' })
+    }, 1000)
+  })
+}
+
+export const UseRequestManualDemo = () => {
+  const { data, loading, run } = useRequest(mockFetchManual)
+
+  return (
+    <div className="flex flex-col gap-4">
+      <Button 
+        onClick={() => run()}
+        disabled={loading}
+        className="w-full bg-green-500 text-white cursor-pointer"
+      >
+        {loading ? '加载中...' : '获取数据'}
+      </Button>
+      {data && <pre className="bg-gray-100 p-4 rounded-md">{JSON.stringify(data, null, 2)}</pre>}
+    </div>
+  )
+}
+
+<div>
+    <UseRequestManualDemo />
+</div>
+
+## 示例 回调函数
+
+```ts
+import { useRequest } from '@f-react-hooks/hooks'
+
+const fetcher = () => fetch('/api/data').then(res => res.json())
+
+export const UseRequestCallbackDemo = () => {
+    const { data, loading, run } = useRequest(fetcher, {
+        onSuccess: (data) => {
+            alert(data.message)
+        },
+        onError: (error) => {
+            alert(error.message)
+        },
+        onFinally: () => {
+            console.log('请求完成')
+        }
+    })
+
+    function handleClick() {
+        run()
+    }
+    
+    return (
+        <div>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <Button disabled={loading} className="w-full bg-green-500 text-white cursor-pointer" onClick={handleClick}>{loading ? '加载中...' : '发起请求'}
+            </Button>
+        </div>
+    )
+}
+```
+
+export const fetcher = () => fetch('/api/data').then(res => res.json())
+
+export const UseRequestCallbackDemo = () => {
+    const { data, loading, run } = useRequest(fetcher, {
+        onSuccess: (data) => {
+            alert(data.message)
+        },
+        onError: (error) => {
+            alert(error.message)
+        },
+        onFinally: () => {
+            console.log('请求完成')
+        }
+    })
+
+    function handleClick() {
+        run()
+    }
+
+    return (
+        <div>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <Button disabled={loading} className="w-full bg-green-500 text-white cursor-pointer" onClick={handleClick}>{loading ? '加载中...' : '发起请求'}
+            </Button>
+        </div>
+    )
+}
+
+<div>
+    <UseRequestCallbackDemo />
+</div>
