@@ -1,12 +1,84 @@
 # useToggle
 
+## 描述
+
+`useToggle` 是一个用于管理切换状态的 React Hook，支持在两个值之间进行切换。适用于开关、布尔状态切换等场景，提供简洁的 API 来处理二元状态。
+
+## API
+
+### 函数签名
+
+```ts
+function useToggle<T, U>(defaultValue: T, reverseValue: U): [T | U, () => void]
+```
+
+### 参数
+
+| 参数 | 类型 | 必需 | 说明 |
+|------|------|------|------|
+| `defaultValue` | `T` | 是 | 默认值，初始状态 |
+| `reverseValue` | `U` | 是 | 切换值，与默认值交替切换 |
+
+### 返回值
+
+| 返回值 | 类型 | 说明 |
+|--------|------|------|
+| `value` | `T  U` | 当前状态值 |
+| `toggle` | `() => void` | 切换函数，调用后在两个值之间切换 |
+
+## 示例 Boolean
+
+```ts
 import { useToggle } from '@f-react-hooks/hooks'
 
-export const useToggleDemo = () => {
+export const UseToggleDemo = () => {
     const [value, toggle] = useToggle(false, true)
 
-    return <button onClick={toggle}>{value ? '开' : '关'}</button>
+    return <button onClick={toggle}>{value}</button>
 }
 
+<div>
+    <UseToggleDemo />
+</div>
+```
 
-<useToggleDemo />
+import { useToggle } from '@f-react-hooks/hooks'
+import { CmpRender } from '@/components/CmpRender'
+
+export const UseToggleDemoBoolean = () => {
+    const [value, toggle] = useToggle(false, true)
+    return <button className="bg-blue-500 text-white px-2 py-1 rounded-md" onClick={toggle}>{ JSON.stringify(value) }</button>
+}
+
+<div>
+    <CmpRender>
+        <UseToggleDemoBoolean />
+    </CmpRender>
+</div>
+
+
+## 示例 String
+
+```ts
+import { useToggle } from '@f-react-hooks/hooks'
+
+export const UseToggleDemo = () => {
+    const [value, toggle] = useToggle('开', '关')
+    return <button className="bg-green-500 text-white px-2 py-1 rounded-md" onClick={toggle}>{value}</button>
+}
+
+<div>
+    <UseToggleDemo />
+</div>
+```
+
+export const UseToggleDemo = () => {
+    const [value, toggle] = useToggle('开', '关')
+    return <button className="bg-green-500 text-white px-2 py-1 rounded-md" onClick={toggle}>{value}</button>
+}
+
+<div>
+    <CmpRender>
+        <UseToggleDemo />
+    </CmpRender>
+</div>

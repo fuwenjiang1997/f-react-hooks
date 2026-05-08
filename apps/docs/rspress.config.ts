@@ -5,13 +5,15 @@ import { defineConfig } from '@rspress/core'
 export default defineConfig({
     base: '/f-react-hooks/',
     root: 'src',
+    globalStyles: path.join(__dirname, 'tailwind.css'),
     builderConfig: {
         resolve: {
             alias: {
                 '@f-react-hooks/hooks': path.resolve(
                     __dirname,
                     '../../packages/hooks/dist/index.js' // 指向 hooks 包的入口文件
-                )
+                ),
+                '@': path.resolve(__dirname, 'src')
             }
         }
     }
