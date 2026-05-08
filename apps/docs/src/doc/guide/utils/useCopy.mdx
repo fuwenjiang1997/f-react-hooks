@@ -1,0 +1,107 @@
+# useCopy
+
+## 描述
+
+`useCopy` 是一个用于复制文本到剪贴板的 React Hook。它提供了简洁的 API 来处理剪贴板操作，并支持成功/失败回调以及自动重置状态。
+
+## API
+
+### 函数签名
+
+```ts
+function useCopy(options?: UseCopyOptions): UseCopyReturn
+```
+
+### 参数
+
+| 参数      | 类型             | 必需 | 说明   |
+| --------- | ---------------- | ---- | ------ |
+| `options` | `UseCopyOptions` | 否   | 配置项 |
+
+### Options
+
+| 参数            | 类型                     | 默认值 | 说明                                |
+| --------------- | ------------------------ | ------ | ----------------------------------- |
+| `onSuccess`     | `() => void`             | -      | 复制成功时的回调函数                |
+| `onError`       | `(error: Error) => void` | -      | 复制失败时的回调函数                |
+| `resetDuration` | `number`                 | `2000` | `copied` 状态自动重置的时间（毫秒） |
+
+### 返回值
+
+| 返回值        | 类型                                 | 说明                                      |
+| ------------- | ------------------------------------ | ----------------------------------------- |
+| `copy`        | `(text: string) => Promise<boolean>` | 复制文本的函数，返回 Promise 表示是否成功 |
+| `copied`      | `boolean`                            | 最近一次复制是否成功（会自动重置）        |
+| `isSupported` | `boolean`                            | 当前环境是否支持剪贴板 API                |
+
+## 示例
+
+```ts
+import { useCopy } from '@f-react-hooks/hooks'
+import { useState } from 'react'
+
+export const UseCopyDemo = () => {
+    const { copy, copied } = useCopy({
+        onSuccess: () => console.log('复制成功'),
+        onError: (err) => console.error('复制失败', err)
+    })
+    const [text, setText] = useState('Hello World')
+
+    const handleCopy = async () => {
+        await copy(text)
+    }
+
+    return (
+        <div className="flex flex-col gap-4">
+            <input
+                type="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                className="px-4 py-2 border rounded-md"
+            />
+            <button
+                onClick={handleCopy}
+                className={`px-4 py-2 rounded-md ${copied ? 'bg-green-500' : 'bg-blue-500'} text-white`}
+            >
+                {copied ? '已复制!' : '复制'}
+            </button>
+        </div>
+    )
+}
+```
+
+import { useState } from 'react'
+import { useCopy } from '@f-react-hooks/hooks'
+import { Button } from '@/components/ui/button'
+
+export const UseCopyDemo = () => {
+  const { copy, copied } = useCopy({
+    onSuccess: () => console.log('复制成功'),
+    onError: (err) => console.error('复制失败', err)
+  })
+  const [text, setText] = useState('Hello World')
+
+  const handleCopy = async () => {
+    await copy(text)
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        className="px-4 py-1 border rounded-md"
+      />
+      <Button
+        onClick={handleCopy}
+        className={`${copied ? 'bg-green-500' : 'bg-blue-500'} text-white`} >
+          {copied ? '已复制!' : '复制'}
+      </Button>
+    </div>
+  )
+}
+
+<div>
+    <UseCopyDemo />
+</div>

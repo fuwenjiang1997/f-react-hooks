@@ -6,6 +6,22 @@
 import { useRequest } from '@f-react-hooks/hooks'
 ```
 
+## 开发计划
+
+- [x] userToggle
+- [x] useFetch
+- [x] useCopy
+- [x] useClickOutside
+- [ ] useDebounce
+- [ ] useThrottle
+- [ ] useWindowSize
+- [ ] useScroll
+- [ ] useResizeObserver
+- [ ] useLocalStorage
+- [ ] useSessionStorage
+- [ ] useCookie
+- [ ] useWebSocket
+
 ## 开始使用
 
 ```tsx
